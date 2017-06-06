@@ -20,7 +20,7 @@ public class Gui implements KeyListener{
 	public Game game = new Game();
 	public JFrame frame = new JFrame();
 	private final int sizeOfElement = 20; //the size of an element in the window, in terms of pixels.
-	
+	public boolean gameGoing = true;
 	private final BufferedImage[] images;
 	
 	public Gui() {
@@ -48,24 +48,27 @@ public class Gui implements KeyListener{
 	}
 	
 	public void drawGame() {
-		JPanel pane = new JPanel() {
-			private static final long serialVersionUID = 1L;
+		if (gameGoing) {
+			JPanel pane = new JPanel() {
+				private static final long serialVersionUID = 1L;
 
-			@Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                for (int i = 0; i < game.map.length; i++) {
-                	final int yVal = i * sizeOfElement;
-                	for (int j = 0; j < game.map[i].length; j++) {
-                		final int xVal = j * sizeOfElement;
-                		BufferedImage image = images[game.map[i][j]];
-                		g.drawImage(image, xVal, yVal, null);
+				@Override
+            	protected void paintComponent(Graphics g) {
+                	super.paintComponent(g);
+                	for (int i = 0; i < game.map.length; i++) {
+                		final int yVal = i * sizeOfElement;
+                		for (int j = 0; j < game.map[i].length; j++) {
+                			final int xVal = j * sizeOfElement;
+                			BufferedImage image = images[game.map[i][j]];
+                			g.drawImage(image, xVal, yVal, null);
+                		}
                 	}
-                }
-            }
-        };
-        frame.add(pane);
-        frame.repaint();
+                	g.drawString("Score: " + game.getScore(), (game.map.length * sizeOfElement) - sizeOfElement, sizeOfElement);
+            	}
+        	};
+        	frame.add(pane);
+        	frame.repaint();
+        }
 	}
 	
 	public void drawDead() {
@@ -75,12 +78,15 @@ public class Gui implements KeyListener{
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawString("You Lost", 50, 50);
+                g.drawString("You are Dead", sizeOfElement, sizeOfElement);
             }
         };
+        frame.dispose();
+        frame = new JFrame();
+        initialize();
         frame.add(pane);
         frame.repaint();
-        frame.setVisible(false);
+        //frame.setVisible(false);
 	}
 	
 	public void drawWin() {
@@ -97,6 +103,9 @@ public class Gui implements KeyListener{
                 g.drawString("You Won", 50, 50);
             }
         };
+        frame.setVisible(false);
+        frame = new JFrame();
+        initialize();
 
         frame.add(pane);
         frame.repaint();
@@ -122,31 +131,37 @@ public class Gui implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		System.out.println(code);
 		switch (code) {
 			case KeyEvent.VK_UP : 
 				game.movePecMan(0);
 				game.moveGhosts();
-				System.out.println("up");
+				//System.out.println("up");
 				break;
 			case KeyEvent.VK_DOWN : 
 				game.movePecMan(1);
 				game.moveGhosts();
-				System.out.println("down");
+				//System.out.println("down");
 				break;
 			case KeyEvent.VK_RIGHT : 
 				game.movePecMan(2);
 				game.moveGhosts();
-				System.out.println("right");
+				//System.out.println("right");
 				break;
 			case KeyEvent.VK_LEFT : 
 				game.movePecMan(3);
 				game.moveGhosts();
-				System.out.println("left");
+				//System.out.println("left");
 				break;
 		}
 		if (game.isDead()) {
-			System.out.println("you ded");
+			//System.out.println("you ded");
+			gameGoing = false;
+			drawDead();
+		}
+		if (game.isAWinner()) {
+			//System.out.println("you win");
+			gameGoing = false;
+			drawWin();
 		}
 		this.drawGame();
 	}

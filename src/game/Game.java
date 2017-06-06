@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Random;
+
 public class Game {
 
 	public int score = 0;
@@ -89,10 +91,10 @@ public class Game {
 
 	public boolean isDead() {
 		return pecman.isDead() 
-			|| (pecman.x == g1.x && pecman.x == g1.y)
-			|| (pecman.x == g2.x && pecman.x == g2.y)
-			|| (pecman.x == g3.x && pecman.x == g3.y)
-			|| (pecman.x == g4.x && pecman.x == g4.y);
+			|| (pecman.x == g1.x && pecman.y == g1.y)
+			|| (pecman.x == g2.x && pecman.y == g2.y)
+			|| (pecman.x == g3.x && pecman.y == g3.y)
+			|| (pecman.x == g4.x && pecman.y == g4.y);
 	}
 
 	public boolean isAWinner() {
@@ -100,27 +102,67 @@ public class Game {
 	}
 
 	public void moveGhosts() {
-		int direction = (int) (Math.random() * 3);
-		if (direction == 0) {
-			g1.moveUp();
-			g2.moveLeft();
-			g3.moveDown();
-			g4.moveRight();
-		} else if (direction == 1) {
-			g1.moveRight();
-			g2.moveDown();
-			g3.moveLeft();
-			g4.moveUp();
-		} else if (direction == 2) {
-			g1.moveLeft();
-			g2.moveUp();
-			g3.moveRight();
-			g4.moveDown();
-		} else if (direction == 0) {
-			g1.moveDown();
-			g2.moveRight();
-			g3.moveUp();
-			g4.moveLeft();
+		Random r = new Random();
+		r.nextInt(4);
+		int direction = r.nextInt(4);
+		switch (direction) {
+			case 0 :
+				g1.moveUp();
+				break;
+			case 1 :
+				g1.moveLeft();
+				break;
+			case 2 :
+				g1.moveDown();
+				break;
+			case 3 :
+				g1.moveRight();
+				break;
+		}
+		direction = r.nextInt(4);
+		switch (direction) {
+			case 0 :
+				g2.moveUp();
+				break;
+			case 1 :
+				g2.moveLeft();
+				break;
+			case 2 :
+				g2.moveDown();
+				break;
+			case 3 :
+				g2.moveRight();
+				break;
+		}
+		direction = r.nextInt(4);
+		switch (direction) {
+			case 0 :
+				g3.moveUp();
+				break;
+			case 1 :
+				g3.moveLeft();
+				break;
+			case 2 :
+				g3.moveDown();
+				break;
+			case 3 :
+				g3.moveRight();
+				break;
+		}
+		direction = r.nextInt(4);
+		switch (direction) {
+			case 0 :
+				g4.moveUp();
+				break;
+			case 1 :
+				g4.moveLeft();
+				break;
+			case 2 :
+				g4.moveDown();
+				break;
+			case 3 :
+				g4.moveRight();
+				break;
 		}
 	}
 
