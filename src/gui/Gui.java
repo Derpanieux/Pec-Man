@@ -157,8 +157,7 @@ public class Gui implements KeyListener{
 			//System.out.println("you win");
 			gameGoing = false;
 			drawWin();
-		}
-		if (game.isDead()) {
+		}else if (game.isDead()) {
 			//System.out.println("you ded");
 			gameGoing = false;
 			drawDead();
