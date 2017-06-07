@@ -7,5 +7,6 @@ public class Main {
 		g.initialize();
 		g.drawGame();
 	}
-
+	
+	//this text here compiles down into nothing because it is commented.
 }

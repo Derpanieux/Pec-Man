@@ -153,15 +153,15 @@ public class Gui implements KeyListener{
 				//System.out.println("left");
 				break;
 		}
-		if (game.isDead()) {
-			//System.out.println("you ded");
-			gameGoing = false;
-			drawDead();
-		}
 		if (game.isAWinner()) {
 			//System.out.println("you win");
 			gameGoing = false;
 			drawWin();
+		}
+		if (game.isDead()) {
+			//System.out.println("you ded");
+			gameGoing = false;
+			drawDead();
 		}
 		this.drawGame();
 	}
@@ -170,4 +170,8 @@ public class Gui implements KeyListener{
 	public void keyReleased(KeyEvent e) {} 
 	@Override
 	public void keyTyped(KeyEvent e) {}
+	
+	public void dump() {
+		frame.dispose();
+	}
 }
